@@ -37,9 +37,6 @@ select
 from prep_agg
 group by 1
 order by 2 desc
+limit 1
 
-select
-product_name
-from products
-where product_id = 1162
 
