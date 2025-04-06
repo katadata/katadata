@@ -1,44 +1,41 @@
 /* 1. Liczba zamówień i unikalnych klientów/Number of orders and number of unique customers */
 select 
-count(order_id) as nr_of_orders
-,count(distinct customer_id) as nr_of_customers
+	count(order_id) as nr_of_orders
+	,count(distinct customer_id) as nr_of_customers
 from orders
-/* Mamy 5009 zamówień oraz 793 unikalnych klientów/We have 5009 orders and 793 unique customers */
 
 /* 2. Średni czas dostawy/ Average delivery time */
 select 
-round(avg(DATEDIFF(shipping_date, order_date))) as avg_of_time_order
-from orders
-/* Średni czas dostawy wynosi 4 dni/ Average delivery time is 4 days */
+	round(avg(DATEDIFF(shipping_date, order_date))) as avg_of_time_order
+	from orders
 
-/* 3. Liczba zamówień według miasta */
+/* 3. Liczba zamówień według miasta/ Number of orders by city */
 select
-delivery_city
-,count(order_id) as nr_of_orders
+	delivery_city
+	,count(order_id) as nr_of_orders
 from orders
 group by 1
 order by 2 desc
 
-/* 3A. Dla wybranych miast, zaczynających się na C */
+/* 3A. Liczba zamówień dla miast zaczynających się na 'C'/ Number of orders for cities starting with 'C'  */
 select
-delivery_city
-,count(order_id) as nr_of_orders
+	delivery_city
+	,count(order_id) as nr_of_orders
 from orders
 where delivery_city like "C%"
 group by 1
 order by 2 desc
 
-/* 3B. Dla wybranych miast: "Houston, Philadelphia" */
+/* 3B. Liczba zamówień dla wybranych miast: "Houston, Philadelphia"/ Number of orders for cities: "Houston, Philadelphia" */
 select
-delivery_city
-,count(order_id) as nr_of_orders
+	delivery_city
+	,count(order_id) as nr_of_orders
 from orders
 where delivery_city in ("Houston", "Philadelphia")
 group by 1
 order by 2 desc
 
- /* 3C. Procentowy udział zamówień z danego kraju/
-percentage of orders by country */
+ /* 3C. Procentowy udział zamówień z danego kraju/ Percentage of orders by country */
 select
 	delivery_city
 	,count(order_id) as nr_of_orders
@@ -49,20 +46,18 @@ order by 2 desc
 
 /*4. Miasta z największą liczbą zamówień/ Cities with the highest number of orders */
 select
-delivery_city
-,count(order_id) as nr_of_orders
+	delivery_city
+	,count(order_id) as nr_of_orders
 from orders
 group by 1
 order by 2 desc
 limit 5
 
-/* Cities with the highest number of orders are: New York City, Los Angeles, Philadelphia, San Francisco, Seattle
-
 /* 6. Liczba zamówień w każdym miesiącu/ Number of orders per month */
 select
 	year(order_date) 	as order_year
 	,month(order_date) 	as order_month
-	,count(*) 			as nr_of_orders
+	,count(*) 		as nr_of_orders
 from orders
 group by 1,2
 order by 1,2
